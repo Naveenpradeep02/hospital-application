@@ -1,7 +1,9 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -10,7 +12,7 @@ const transporter = nodemailer.createTransport({
 
 const sendOTP = async (email, otp) => {
   await transporter.sendMail({
-    from: process.env.EMAIL_USER,
+    from: `"Hospital App" <${process.env.EMAIL_USER}>`,
     to: email,
     subject: "Your Login OTP",
     text: `Your verification OTP is: ${otp}`,

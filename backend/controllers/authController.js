@@ -59,13 +59,13 @@ exports.verifyOTP = async (req, res) => {
       email,
     ]);
 
-    const user = result.rows[0];
-
-    if (!user) {
+    if (result.rows.length === 0) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.otp !== otp) {
+    const user = result.rows[0];
+
+    if (Number(user.otp) !== Number(otp)) {
       return res.status(400).json({ message: "Invalid OTP" });
     }
 
@@ -81,7 +81,8 @@ exports.verifyOTP = async (req, res) => {
 
     res.json({ token });
   } catch (err) {
-    res.status(500).json(err.message);
+    console.error("VERIFY OTP ERROR:", err);
+    res.status(500).json({ error: err.message });
   }
 };
 

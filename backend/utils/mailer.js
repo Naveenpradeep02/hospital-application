@@ -55,16 +55,15 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 const sendOTP = async (email, otp) => {
   try {
     const response = await resend.emails.send({
-      from: "Hospital App <onboarding@resend.dev>",
+      from: "onboarding@resend.dev",
       to: email,
       subject: "Your Login OTP",
-      html: `<p>Your verification OTP is <strong>${otp}</strong></p>`,
+      html: `<h2>Your OTP is ${otp}</h2>`,
     });
 
     console.log("Email sent:", response);
   } catch (error) {
     console.error("MAIL ERROR:", error);
-    throw error;
   }
 };
 

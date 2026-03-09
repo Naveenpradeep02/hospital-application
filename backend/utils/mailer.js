@@ -6,8 +6,10 @@ const transporter = nodemailer.createTransport({
   secure: false,
   family: 4, // force IPv4
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    // user: process.env.EMAIL_USER,
+    // pass: process.env.EMAIL_PASS,
+    user: "naveenpradeep0203@gmail.com",
+    pass: "hmjuhazngsvxjoeu",
   },
 });
 

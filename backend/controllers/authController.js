@@ -45,9 +45,9 @@ exports.login = async (req, res) => {
     }
 
     res.json({ message: "OTP sent to email" });
-
   } catch (err) {
     res.status(500).json(err.message);
+    res.json({ message: "not login" });
   }
 };
 

@@ -109,3 +109,13 @@ CREATE TABLE bill_items (
  amount NUMERIC
 
 );
+
+ALTER TABLE bills
+ADD COLUMN bill_number VARCHAR(50);
+
+
+ALTER TABLE doctors
+ADD COLUMN active BOOLEAN DEFAULT true;
+
+ALTER TABLE patients
+ADD COLUMN email VARCHAR(150);

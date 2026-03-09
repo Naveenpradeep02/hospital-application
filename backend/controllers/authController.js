@@ -36,13 +36,16 @@ exports.login = async (req, res) => {
     ]);
 
     // send email
+    // send email
     try {
       await sendOTP(email, otp);
     } catch (err) {
-      res.status(500).json(err.message);
+      console.error("OTP email error:", err);
+      return res.status(500).json({ message: "Failed to send OTP email" });
     }
 
     res.json({ message: "OTP sent to email" });
+
   } catch (err) {
     res.status(500).json(err.message);
   }

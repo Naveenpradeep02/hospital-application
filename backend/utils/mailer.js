@@ -3,7 +3,8 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
-  secure: false, // IMPORTANT: false for 587
+  secure: false,
+  family: 4, // force IPv4
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -19,9 +20,9 @@ const sendOTP = async (email, otp) => {
       text: `Your verification OTP is: ${otp}`,
     });
 
-    console.log("OTP email sent:", info.messageId);
+    console.log("Email sent:", info.messageId);
   } catch (error) {
-    console.error("OTP email error:", error);
+    console.error("MAIL ERROR:", error);
     throw error;
   }
 };

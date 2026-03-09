@@ -2,21 +2,12 @@ const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465,
-  secure: true, // true for port 465
+  port: 587,
+  secure: false, // IMPORTANT: false for 587
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-});
-
-// verify connection once when server starts
-transporter.verify(function (error, success) {
-  if (error) {
-    console.error("SMTP connection error:", error);
-  } else {
-    console.log("SMTP server is ready to send emails");
-  }
 });
 
 const sendOTP = async (email, otp) => {
@@ -29,10 +20,9 @@ const sendOTP = async (email, otp) => {
     });
 
     console.log("OTP email sent:", info.messageId);
-    return true;
   } catch (error) {
-    console.error("Error sending OTP email:", error);
-    throw new Error("Email service failed");
+    console.error("OTP email error:", error);
+    throw error;
   }
 };
 

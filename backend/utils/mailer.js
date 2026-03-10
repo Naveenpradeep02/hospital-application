@@ -47,17 +47,14 @@
 // };
 
 // module.exports = sendOTP;
-
 const { Resend } = require("resend");
-
-console.log("RESEND KEY:", process.env.RESEND_API_KEY);
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 const sendOTP = async (email, otp) => {
   try {
     const response = await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "MedGrow Digi <no-reply@mail.medgrowdigi.com>",
       to: email,
       subject: "Your Login OTP",
       html: `<h2>Your OTP is ${otp}</h2>`,

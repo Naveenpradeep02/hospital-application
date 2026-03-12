@@ -27,18 +27,15 @@ function AppointmentBooking() {
   const [time, setTime] = useState("");
 
   const timeSlots = [
-    "09:00 AM - 09:15 AM",
-    "09:15 AM - 09:30 AM",
-    "09:30 AM - 09:45 AM",
-    "09:45 AM - 10:00 AM",
-    "10:00 AM - 10:15 AM",
-    "10:15 AM - 10:30 AM",
-    "10:30 AM - 10:45 AM",
-    "10:45 AM - 11:00 AM",
-    "11:00 AM - 11:15 AM",
-    "11:15 AM - 11:30 AM",
-    "11:30 AM - 11:45 AM",
-    "11:45 AM - 12:00 PM",
+    "05:30",
+    "06:00",
+    "06:30",
+    "07:00",
+    "07:30",
+    "08:00",
+    "08:30",
+    "09:00",
+    "09:30",
   ];
 
   useEffect(() => {
@@ -68,10 +65,10 @@ function AppointmentBooking() {
         age,
         gender,
         phone,
-        email, // ✅ ADDED
+        email,
         address,
         doctor_id: doctor,
-        appointment_date: date,
+        appointment_date: date.toISOString().split("T")[0],
         appointment_time: time,
       });
 
@@ -262,7 +259,7 @@ function AppointmentBooking() {
                         : "hover:bg-gray-100"
                     }`}
                   >
-                    {slot}
+                    {slot} PM
                   </div>
                 ))}
               </div>

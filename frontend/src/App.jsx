@@ -20,7 +20,7 @@ import AppointmentBooking from "./pages/AppointmentBooking";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/appointment">
       <ToastContainer
         position="top-right"
         autoClose={2000}

@@ -298,3 +298,72 @@ function AppointmentBooking() {
 }
 
 export default AppointmentBooking;
+
+exports.createManualAppointment = async (req, res) => {
+  const {
+    name,
+    age,
+    gender,
+    phone,
+    email,
+    address,
+    doctor_id,
+    appointment_date,
+    appointment_time,
+  } = req.body;
+
+  try {
+    /* CHECK IF PATIENT EXISTS */
+
+    let patientResult = await pool.query(
+      `SELECT id FROM patients WHERE phone=$1`,
+      [phone],
+    );
+
+    let patient_id;
+
+    if (patientResult.rows.length > 0) {
+      patient_id = patientResult.rows[0].id;
+    } else {
+      const newPatient = await pool.query(
+        `INSERT INTO patients (name,age,gender,phone,email,address)
+         VALUES ($1,$2,$3,$4,$5,$6)
+         RETURNING id`,
+        [name, age, gender, phone, email, address],
+      );
+
+      patient_id = newPatient.rows[0].id;
+    }
+
+    /* GENERATE TOKEN */
+
+    const tokenResult = await pool.query(
+      `SELECT COALESCE(MAX(token_number),0)+1 AS token
+       FROM appointments
+       WHERE doctor_id=$1
+       AND appointment_date=$2`,
+      [doctor_id, appointment_date],
+    );
+
+    const token = tokenResult.rows[0].token;
+
+    /* CREATE APPOINTMENT */
+
+    const appointment = await pool.query(
+      `INSERT INTO appointments
+       (patient_id,doctor_id,appointment_date,appointment_time,token_number)
+       VALUES($1,$2,$3,$4,$5)
+       RETURNING *`,
+      [patient_id, doctor_id, appointment_date, appointment_time, token],
+    );
+
+    res.json({
+      message: "Appointment booked successfully",
+      token_number: token,
+      appointment: appointment.rows[0],
+    });
+  } catch (err) {
+    console.error("BOOKING ERROR:", err);
+    res.status(500).json({ error: err.message });
+  }
+};

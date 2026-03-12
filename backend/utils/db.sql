@@ -119,3 +119,8 @@ ADD COLUMN active BOOLEAN DEFAULT true;
 
 ALTER TABLE patients
 ADD COLUMN email VARCHAR(150);
+
+
+SELECT * FROM admins;
+
+

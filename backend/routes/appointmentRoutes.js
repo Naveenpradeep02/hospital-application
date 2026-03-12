@@ -9,11 +9,14 @@ const {
   getAppointments,
   updateStatus,
   getTodayAppointments,
+  createManualAppointment,
 } = require("../controllers/appointmentController");
 
 router.post("/", verifyToken, createAppointment);
 
 router.get("/", verifyToken, getAppointments);
+
+router.post("/manual", createManualAppointment);
 
 router.get("/today", verifyToken, getTodayAppointments);
 
